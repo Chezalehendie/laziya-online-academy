@@ -80,47 +80,35 @@ export function About() {
         </div>
       </section>
       {/* Vision Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div>
-              <h2 className="text-3xl font-bold text-[#03045e] mb-6">
-                Our Vision
-              </h2>
-              <p className="text-gray-700 mb-6">
-                At Laziya Online Academy, we envision a future where technology seamlessly
-                supports education, allowing schools to focus on what matters
-                most: teaching and learning. We believe in creating tools that
-                are intuitive, accessible, and impactful.
-              </p>
-              <p className="text-gray-700 mb-6">
-                Our platform is designed with input from educators,
-                administrators, students, and parents to ensure it meets the
-                real needs of a school Community.
-              </p>
-              <div className="space-y-3">
-                {[
-                  'Simplify administrative tasks',
-                  'Enhance communication',
-                  'Support data-driven decisions',
-                  'Improve educational outcomes',
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center">
-                    <CheckCircle size={20} className="text-[#00b4d8] mr-2" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
-                alt="Students collaborating in a modern classroom"
-                className="rounded-lg shadow-xl"
-              />
+      <section className="overflow-hidden bg-[#caf0f8] sm:grid sm:grid-cols-2 sm:items-center">
+        <div className="p-8 md:p-12 lg:px-16 lg:py-24">
+          <div className="mx-auto max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
+            <h2 className="text-2xl font-bold text-[#03045e] md:text-3xl">
+              Our Vision for the Future of Education
+            </h2>
+
+            <p className="hidden text-gray-700 md:mt-4 md:block">
+              At Laziya Online Academy, we envision a future where technology seamlessly
+              supports education, empowering students, teachers, and administrators worldwide. 
+              We believe in creating an accessible, intuitive, and impactful learning environment 
+              that transcends geographical boundaries and adapts to every learner's needs.
+            </p>
+
+            <div className="mt-4 md:mt-8">
+              <Link href="/signup">
+                <button className="inline-block rounded-sm bg-[#00b4d8] px-12 py-3 text-sm font-medium text-white transition hover:bg-[#03045e] focus:ring-3 focus:ring-[#caf0f8] focus:outline-hidden">
+                  Start Your Journey Today
+                </button>
+              </Link>
             </div>
           </div>
         </div>
+
+        <img
+          alt="Students collaborating in a modern classroom"
+          src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
+          className="h-full w-full object-cover sm:h-[calc(100%_-_2rem)] sm:self-end sm:rounded-ss-[30px] md:h-[calc(100%_-_4rem)] md:rounded-ss-[60px]"
+        />
       </section>
       {/* Team Section */}
       <section className="py-16 bg-white">

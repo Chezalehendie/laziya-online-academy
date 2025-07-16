@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { HeroSection } from '../components/Home/HeroSection'
 import { FeatureSection } from '../components/Home/FeatureSection'
+import { VideoTourSection } from '../components/Home/VideoTourSection'
 import { TestimonialSection } from '../components/Home/TestimonialSection'
 import { StatsSection } from '../components/Home/StatsSection'
 import { Button } from '../components/UI/Button'
@@ -10,6 +11,7 @@ export function Home() {
     <>
       <HeroSection />
       <FeatureSection />
+      <VideoTourSection />
       <StatsSection />
       <TestimonialSection />
       {/* CTA Section */}

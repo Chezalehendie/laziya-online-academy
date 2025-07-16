@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react'
 import { Card } from '../UI/Card'
+import { motion } from 'framer-motion'
 import {
   BookOpen,
   Users,
@@ -61,17 +64,23 @@ export function FeatureSection() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card
+            <motion.div
               key={index}
-              variant="elevated"
-              className="p-6 hover:shadow-lg transition-shadow duration-300 bg-[#caf0f8] bg-opacity-30"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-[#03045e] mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </Card>
+              <Card
+                variant="elevated"
+                className="p-6 hover:shadow-lg transition-shadow duration-300 bg-[#caf0f8] bg-opacity-30 h-full"
+              >
+                <div className="mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-semibold text-[#03045e] mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>

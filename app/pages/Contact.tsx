@@ -73,7 +73,7 @@ export function Contact() {
             </div>
           </div>
         </div>
-        {/* Map placeholder - In a real app, this would be a Google Maps embed */}
+        {/* Map placeholder */}
         <div className="max-w-6xl mx-auto mt-12 bg-gray-200 rounded-lg overflow-hidden h-64 flex items-center justify-center">
           <p className="text-gray-500">
             [Map would be displayed here - Google Maps integration]

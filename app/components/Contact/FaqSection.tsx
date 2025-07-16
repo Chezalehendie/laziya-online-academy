@@ -1,7 +1,5 @@
-'use client'
+import React from 'react'
 
-import React, { useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
 const faqs = [
   {
     question: 'How do I get started with Laziya?',
@@ -29,43 +27,39 @@ const faqs = [
       'Yes, we provide comprehensive training resources including video tutorials, documentation, and live webinars. we also offer personalized onboarding sessions for administrators and staff.',
   },
 ]
+
 export function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-  const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-[#03045e] mb-8 text-center">
           Frequently Asked Questions
         </h2>
-        <div className="max-w-3xl mx-auto divide-y divide-gray-200">
+        <div className="max-w-3xl mx-auto space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="py-6">
-              <button
-                onClick={() => toggleFaq(index)}
-                className="flex justify-between items-center w-full text-left focus:outline-none"
-                aria-expanded={openIndex === index}
-                aria-controls={`faq-answer-${index}`}
-              >
-                <h3 className="text-lg font-semibold text-[#03045e]">
-                  {faq.question}
-                </h3>
-                <span className="text-[#00b4d8] ml-2">
-                  {openIndex === index ? (
-                    <ChevronUp size={20} />
-                  ) : (
-                    <ChevronDown size={20} />
-                  )}
-                </span>
-              </button>
-              {openIndex === index && (
-                <div id={`faq-answer-${index}`} className="mt-3 text-gray-600">
-                  <p>{faq.answer}</p>
-                </div>
-              )}
-            </div>
+            <details
+              key={index}
+              className="group border-s-4 border-[#caf0f8] bg-[#caf0f8]/20 p-4 [&_summary::-webkit-details-marker]:hidden"
+              {...(index === 0 ? { open: true } : {})}
+            >
+              <summary className="flex items-center justify-between gap-1.5 text-[#03045e] cursor-pointer">
+                <h3 className="text-lg font-medium">{faq.question}</h3>
+
+                <svg
+                  className="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180 text-[#00b4d8]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+
+              <p className="pt-4 text-gray-700">
+                {faq.answer}
+              </p>
+            </details>
           ))}
         </div>
       </div>
