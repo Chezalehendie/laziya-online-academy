@@ -67,7 +67,7 @@ const milestones = [
 ]
 export function About() {
   return (
-    <div className="bg-[#caf0f8] bg-opacity-30 min-h-screen">
+    <div className="bg-[#caf0f8] bg-opacity-30 min-h-screen pt-20">
       {/* Hero Section */}
       <section className="bg-[#03045e] text-white py-16">
         <div className="container mx-auto px-4 text-center">

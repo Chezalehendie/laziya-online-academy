@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MenuIcon, XIcon } from 'lucide-react'
@@ -9,6 +9,7 @@ import { motion } from 'framer-motion'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
   const toggleMenu = () => {
@@ -16,6 +17,22 @@ export function Header() {
   }
 
   const isActive = (path: string) => pathname === path
+  const isHomePage = pathname === '/'
+
+  // Detect scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isHomePage) {
+        setIsScrolled(window.scrollY > 100)
+      } else {
+        setIsScrolled(true)
+      }
+    }
+
+    handleScroll() // Set initial state
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isHomePage])
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -24,133 +41,108 @@ export function Header() {
   ]
 
   return (
-    <motion.header 
-      className="bg-[#03045e] sticky top-0 z-50 shadow-md"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-    >
-      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="md:flex md:items-center md:gap-12">
-            <Link href="/" className="block text-[#00b4d8]">
-              <span className="sr-only">Home</span>
-              <motion.span 
-                className="text-2xl font-extrabold bg-gradient-to-r from-[#00b4d8] to-[#caf0f8] bg-clip-text text-transparent tracking-wide"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-              >
-                Laziya Online Academy
-              </motion.span>
-            </Link>
-          </div>
-
-          <div className="hidden md:block">
-            <nav aria-label="Global">
-              <ul className="flex items-center gap-6 text-sm">
-                {navItems.map((item) => (
-                  <motion.li
-                    key={item.path}
-                    className="relative"
-                    initial={false}
-                    animate={{
-                      backgroundColor: isActive(item.path) ? "rgba(0, 180, 216, 0.1)" : "transparent",
-                    }}
-                    style={{
-                      borderRadius: 6,
-                      padding: "8px 12px",
-                      position: "relative",
-                      cursor: "pointer",
-                      transition: "background-color 0.2s ease"
-                    }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Link
-                      href={item.path}
-                      className={
-                        isActive(item.path)
-                          ? 'text-[#00b4d8] font-medium'
-                          : 'text-white transition hover:text-[#00b4d8]'
-                      }
-                    >
-                      {item.label}
-                    </Link>
-                    {isActive(item.path) && (
-                      <motion.div
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#00b4d8] rounded-full"
-                        layoutId="activeNavIndicator"
-                        transition={{ 
-                          type: "spring", 
-                          stiffness: 400, 
-                          damping: 30,
-                          duration: 0.3
-                        }}
-                      />
-                    )}
-                  </motion.li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="sm:flex sm:gap-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  href="/login"
-                  className="rounded-md bg-[#00b4d8] px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-[#caf0f8] hover:text-[#03045e] transition-colors"
+    <>
+      {/* Header */}
+      <motion.div 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled || !isHomePage 
+            ? 'bg-[#03045e] shadow-md' 
+            : 'bg-transparent'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <div className="relative px-4 mx-auto sm:px-6 lg:px-8">
+          <nav className="flex items-center justify-between h-16 lg:h-20">
+            <div className="flex-shrink-0">
+              <Link href="/" className="flex">
+                <motion.span 
+                  className="text-xl lg:text-2xl font-extrabold bg-gradient-to-r from-[#00b4d8] to-[#caf0f8] bg-clip-text text-transparent tracking-wide"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  Login
-                </Link>
-              </motion.div>
+                  Laziya Online Academy
+                </motion.span>
+              </Link>
+            </div>
 
-              <div className="hidden sm:flex">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.button
+              type="button"
+              onClick={toggleMenu}
+              className="inline-flex p-2 text-white transition-all duration-200 rounded-md lg:hidden focus:bg-gray-800 hover:bg-gray-800"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <MenuIcon className="w-6 h-6" />
+            </motion.button>
+
+            <div className="hidden lg:flex lg:items-center lg:space-x-10">
+              {navItems.map((item) => (
+                <motion.div key={item.path} whileHover={{ scale: 1.05 }}>
                   <Link
-                    href="/signup"
-                    className="rounded-md bg-[#caf0f8] px-5 py-2.5 text-sm font-medium text-[#03045e] hover:bg-white hover:text-[#03045e] transition-colors"
+                    href={item.path}
+                    className={
+                      isActive(item.path)
+                        ? 'text-base font-medium text-[#00b4d8]'
+                        : 'text-base font-medium text-white hover:text-[#00b4d8] transition-colors'
+                    }
                   >
-                    Register
+                    {item.label}
                   </Link>
                 </motion.div>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="sm:flex sm:gap-4">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="/login"
+                    className="rounded-md bg-[#00b4d8] px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-[#caf0f8] hover:text-[#03045e] transition-colors"
+                  >
+                    Login
+                  </Link>
+                </motion.div>
+
+                <div className="hidden sm:flex">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      href="/signup"
+                      className="rounded-md bg-[#caf0f8] px-5 py-2.5 text-sm font-medium text-[#03045e] hover:bg-white hover:text-[#03045e] transition-colors"
+                    >
+                      Register
+                    </Link>
+                  </motion.div>
+                </div>
               </div>
             </div>
-
-            <div className="block md:hidden">
-              <motion.button
-                onClick={toggleMenu}
-                className="rounded-sm bg-[#caf0f8] p-2 text-[#03045e] transition hover:bg-white hover:text-[#03045e]"
-                aria-label="Toggle menu"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <motion.div
-                  animate={isMenuOpen ? "open" : "closed"}
-                  variants={{
-                    open: { rotate: 180 },
-                    closed: { rotate: 0 }
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isMenuOpen ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
-                </motion.div>
-              </motion.button>
-            </div>
-          </div>
+          </nav>
         </div>
+      </motion.div>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:hidden bg-[#03045e] overflow-hidden"
+      {/* xs to lg Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.nav
+            initial={{ x: -400, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -400, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed top-0 left-0 z-50 flex flex-col justify-between w-full max-w-xs min-h-screen px-4 py-10 bg-black sm:px-6 lg:hidden"
+          >
+            <motion.button
+              type="button"
+              onClick={toggleMenu}
+              className="inline-flex p-2 text-white transition-all duration-200 rounded-md focus:bg-gray-800 hover:bg-gray-800 self-start"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
             >
-              <nav className="flex flex-col space-y-4 px-4 pb-4">
+              <XIcon className="w-6 h-6" />
+            </motion.button>
+
+            <div className="flex flex-col flex-grow h-full">
+              <nav className="flex flex-col flex-1 mt-10 space-y-2">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.path}
@@ -162,8 +154,8 @@ export function Header() {
                       href={item.path}
                       className={
                         isActive(item.path)
-                          ? 'text-[#00b4d8] font-medium block py-2'
-                          : 'text-white hover:text-[#00b4d8] transition-colors block py-2'
+                          ? 'flex w-full py-2 font-medium text-[#00b4d8] transition-all duration-200'
+                          : 'flex w-full py-2 font-medium text-white transition-all duration-200 hover:text-[#00b4d8]'
                       }
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -171,39 +163,55 @@ export function Header() {
                     </Link>
                   </motion.div>
                 ))}
-                <div className="flex flex-col space-y-2 pt-2">
-                  <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.3 }}
-                  >
-                    <Link
-                      href="/login"
-                      className="px-4 py-2 text-center rounded-md bg-[#00b4d8] text-white hover:bg-[#caf0f8] hover:text-[#03045e] transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Login
-                    </Link>
-                  </motion.div>
-                  <motion.div
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.5, duration: 0.3 }}
-                  >
-                    <Link
-                      href="/signup"
-                      className="px-4 py-2 text-center rounded-md bg-[#caf0f8] text-[#03045e] hover:bg-white hover:text-[#03045e] transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Register
-                    </Link>
-                  </motion.div>
-                </div>
               </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.header>
+
+              <div className="flex flex-col items-start space-y-3">
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.3 }}
+                >
+                  <Link
+                    href="/login"
+                    className="flex w-full py-2 font-medium text-white transition-all duration-200 hover:text-[#00b4d8]"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                </motion.div>
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
+                >
+                  <Link
+                    href="/signup"
+                    className="inline-flex items-center justify-center w-auto px-6 py-3 mt-auto text-base font-semibold text-black transition-all duration-200 bg-[#00b4d8] border border-transparent rounded-full hover:bg-[#caf0f8] focus:bg-[#caf0f8]"
+                    role="button"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Join Now
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* Overlay when mobile menu is open */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   )
 }

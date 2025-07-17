@@ -3,7 +3,7 @@ import { SignupForm } from '../components/Forms/SignupForm'
 import { Card } from '../components/UI/Card'
 export function Signup() {
   return (
-    <div className="min-h-screen bg-[#caf0f8] bg-opacity-30 py-12">
+    <div className="min-h-screen bg-[#caf0f8] bg-opacity-30 py-12 pt-32">
       <div className="container mx-auto px-4">
         <div className="max-w-lg mx-auto">
           <Card variant="elevated" className="p-8">
