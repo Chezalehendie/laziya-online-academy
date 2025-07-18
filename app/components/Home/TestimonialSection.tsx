@@ -1,5 +1,6 @@
 'use client'
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import { motion, useAnimation, useInView } from 'framer-motion'
 
 const testimonials = [
   {
@@ -35,29 +36,84 @@ const testimonials = [
 ]
 
 export function TestimonialSection() {
+  const controls = useAnimation()
+  const ref = useRef(null)
+  const isInView = useInView(ref, { amount: 0.5, once: false })
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible")
+    } else {
+      controls.start("hidden")
+    }
+  }, [isInView, controls])
+
   return (
-    <section className="py-10 bg-gray-100 sm:py-16 lg:py-24">
+    <section className="py-10 bg-gray-100 sm:py-16 lg:py-24" ref={ref}>
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold leading-tight text-gray-800 sm:text-4xl lg:text-5xl">
+        <motion.div
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1 }
+            }
+          }}
+          className="max-w-2xl mx-auto text-center"
+        >
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            className="text-3xl font-bold leading-tight text-gray-800 sm:text-4xl lg:text-5xl"
+          >
             Trusted by <span className="text-[#00b4d8]">500+</span> students
-          </h2>
-          <p className="mt-4 text-base text-gray-600">
+          </motion.h2>
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            className="mt-4 text-base text-gray-600"
+          >
             See how Laziya Online Academy is transforming education across Malawi
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Horizontal scrolling container */}
         <div className="mt-8 sm:mt-12 lg:mt-20">
           <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="flex-none w-72 sm:w-80 snap-start">
-                <div className="overflow-hidden bg-white rounded-md shadow h-full">
+              <motion.div
+                key={index}
+                initial="hidden"
+                animate={controls}
+                variants={{
+                  hidden: { opacity: 0, x: 50 },
+                  visible: {
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      duration: 0.9,
+                      delay: index * 0.2,
+                      ease: "easeOut"
+                    }
+                  }
+                }}
+                className="flex-none w-72 sm:w-80 snap-start"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  className="overflow-hidden bg-white rounded-md shadow h-full"
+                >
                   <div className="px-6 py-8">
                     <div className="relative w-20 h-20 mx-auto">
-                      <img 
-                        className="relative object-cover w-20 h-20 mx-auto rounded-full" 
-                        src={testimonial.image} 
+                      <img
+                        className="relative object-cover w-20 h-20 mx-auto rounded-full"
+                        src={testimonial.image}
                         alt={testimonial.author}
                         onError={(e) => {
                           e.currentTarget.src = `https://ui-avatars.com/api/?name=${testimonial.author}&background=00b4d8&color=fff&size=80`;
@@ -75,15 +131,20 @@ export function TestimonialSection() {
                     <p className="text-sm font-semibold text-black mt-6">{testimonial.author}</p>
                     <p className="mt-1 text-sm text-gray-600">{testimonial.role}</p>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
-          
+
           {/* Scroll indicator */}
-          <div className="flex justify-center mt-6">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="flex justify-center mt-6"
+          >
             <p className="text-sm text-gray-500">← Scroll to see more testimonials →</p>
-          </div>
+          </motion.div>
         </div>
       </div>
 
