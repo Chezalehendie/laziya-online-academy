@@ -5,6 +5,7 @@ import React from 'react'
 import { Card } from '../components/UI/Card'
 import { Button } from '../components/UI/Button'
 import Link from 'next/link'
+import CustomCursor from '../components/cursor/cursor';
 
 // import { CheckCircle } from 'lucide-react'
 const teamMembers = [
@@ -99,6 +100,9 @@ export function About() {
 
   return (
     <div className="bg-[#caf0f8] bg-opacity-30 min-h-screen pt-20">
+      {/* custom cursor */}
+      <CustomCursor />
+
       {/* Hero Section */}
       <section className="bg-[#03045e] text-white py-16">
         <div className="container mx-auto px-4 text-center">

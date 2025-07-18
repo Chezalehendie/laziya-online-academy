@@ -4,37 +4,41 @@ import { useEffect } from "react";
 import React from 'react'
 import { FaqSection } from '../components/Contact/FaqSection'
 import { Mail, Phone, MapPin } from 'lucide-react'
+import CustomCursor from '../components/cursor/cursor';
 
 export function Contact() {
-    // lenis
-    useEffect(() => {
-      // Create a new Lenis instance
-      const lenis = new Lenis({
-        duration: 8,  // Duration of the smooth scroll
-        easing: (t) => t,  // Easing function
-        lerp: 0.1,  // The rate of interpolation
-        wheelEventsTarget: document.documentElement,  // Listen to scroll events on the document element
-        infinite: false,
-        smoothWheel: true,
-      });
-  
-      // Function for animation frame
-      function raf(time: number) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-  
-      // Start the animation frame loop
+  // lenis
+  useEffect(() => {
+    // Create a new Lenis instance
+    const lenis = new Lenis({
+      duration: 8,  // Duration of the smooth scroll
+      easing: (t) => t,  // Easing function
+      lerp: 0.1,  // The rate of interpolation
+      wheelEventsTarget: document.documentElement,  // Listen to scroll events on the document element
+      infinite: false,
+      smoothWheel: true,
+    });
+
+    // Function for animation frame
+    function raf(time: number) {
+      lenis.raf(time);
       requestAnimationFrame(raf);
-  
-      // Cleanup when the component is unmounted
-      return () => {
-        lenis.destroy();
-      };
-    }, []);
+    }
+
+    // Start the animation frame loop
+    requestAnimationFrame(raf);
+
+    // Cleanup when the component is unmounted
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <div className="bg-[#caf0f8] bg-opacity-30 min-h-screen pt-20">
+      {/* custom cursor */}
+      <CustomCursor />
+
       {/* Contact Section */}
       <section className="py-10 bg-gray-100 sm:py-16 lg:py-24">
         <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -87,10 +91,10 @@ export function Contact() {
                     <div>
                       <label className="text-base font-medium text-gray-900">Your name</label>
                       <div className="mt-2.5 relative">
-                        <input 
-                          type="text" 
-                          placeholder="Enter your full name" 
-                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]" 
+                        <input
+                          type="text"
+                          placeholder="Enter your full name"
+                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]"
                         />
                       </div>
                     </div>
@@ -98,10 +102,10 @@ export function Contact() {
                     <div>
                       <label className="text-base font-medium text-gray-900">Email address</label>
                       <div className="mt-2.5 relative">
-                        <input 
-                          type="email" 
-                          placeholder="Enter your email address" 
-                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]" 
+                        <input
+                          type="email"
+                          placeholder="Enter your email address"
+                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]"
                         />
                       </div>
                     </div>
@@ -109,10 +113,10 @@ export function Contact() {
                     <div>
                       <label className="text-base font-medium text-gray-900">Phone number</label>
                       <div className="mt-2.5 relative">
-                        <input 
-                          type="tel" 
-                          placeholder="Enter your phone number" 
-                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]" 
+                        <input
+                          type="tel"
+                          placeholder="Enter your phone number"
+                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]"
                         />
                       </div>
                     </div>
@@ -120,10 +124,10 @@ export function Contact() {
                     <div>
                       <label className="text-base font-medium text-gray-900">Subject</label>
                       <div className="mt-2.5 relative">
-                        <input 
-                          type="text" 
-                          placeholder="Enter subject" 
-                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]" 
+                        <input
+                          type="text"
+                          placeholder="Enter subject"
+                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]"
                         />
                       </div>
                     </div>
@@ -131,17 +135,17 @@ export function Contact() {
                     <div className="sm:col-span-2">
                       <label className="text-base font-medium text-gray-900">Message</label>
                       <div className="mt-2.5 relative">
-                        <textarea 
-                          placeholder="Type your message here..." 
-                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md resize-y focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]" 
+                        <textarea
+                          placeholder="Type your message here..."
+                          className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md resize-y focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]"
                           rows={4}
                         ></textarea>
                       </div>
                     </div>
 
                     <div className="sm:col-span-2">
-                      <button 
-                        type="submit" 
+                      <button
+                        type="submit"
                         className="inline-flex items-center justify-center w-full px-4 py-4 mt-2 text-base font-semibold text-white transition-all duration-200 bg-[#00b4d8] border border-transparent rounded-md focus:outline-none hover:bg-[#03045e] focus:bg-[#03045e]"
                       >
                         Send Message
@@ -164,8 +168,8 @@ export function Contact() {
               For urgent technical issues affecting your operations - we're here to help!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="tel:+265983020084" 
+              <a
+                href="tel:+265983020084"
                 className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-[#03045e] bg-[#caf0f8] rounded-md hover:bg-white transition-colors duration-200"
               >
                 <Phone size={20} className="mr-2" />

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import Link from 'next/link'
 import { HeroSection } from '../components/Home/HeroSection'
@@ -5,11 +6,15 @@ import { FeatureSection } from '../components/Home/FeatureSection'
 import { VideoTourSection } from '../components/Home/VideoTourSection'
 import { TestimonialSection } from '../components/Home/TestimonialSection'
 import { StatsSection } from '../components/Home/StatsSection'
+import CustomCursor from '../components/cursor/cursor'
 // import { Button } from '../components/UI/Button'
 
 export function Home() {
   return (
     <>
+      {/* custom cursor */}
+      <CustomCursor />
+
       <HeroSection />
       <FeatureSection />
       <VideoTourSection />
@@ -27,7 +32,7 @@ export function Home() {
 
             <p className="mt-4 text-base text-pretty text-gray-700 sm:text-lg/relaxed">
               Join hundreds of students already using Laziya Online Academy to enhance
-              their learning experience and unlock their full potential through 
+              their learning experience and unlock their full potential through
               personalized education.
             </p>
 

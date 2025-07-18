@@ -23,4 +23,32 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  cursor: none;
+}
+
+/* custom cursor styles */
+/* Basic reset */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+
+.cursor {
+  position: fixed;
+  width: 2rem;
+  height: 2rem;
+  background-color: #0077be;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2000;
+  padding: 0rem;
+  transition: background-color 0.3s ease, transform 6s ease;
+}
+
+/* Change color when hovering over links */
+.cursor.link-hover {
+  background-color: transparent;
+  border: 3px solid #0077be;
 }
