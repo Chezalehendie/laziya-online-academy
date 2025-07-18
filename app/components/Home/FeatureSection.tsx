@@ -1,8 +1,7 @@
 'use client'
-
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Card } from '../UI/Card'
-import { motion } from 'framer-motion'
+import { motion, useInView, useAnimation } from 'framer-motion'
 import {
   BookOpen,
   Users,
@@ -11,6 +10,7 @@ import {
   MessageSquare,
   Shield,
 } from 'lucide-react'
+
 const features = [
   {
     title: 'Grade Management',
@@ -64,27 +64,57 @@ export function FeatureSection() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Card
-                variant="elevated"
-                className="p-6 hover:shadow-lg transition-shadow duration-300 bg-[#caf0f8] bg-opacity-30 h-full"
+          {features.map((feature, index) => {
+            const ref = useRef(null);
+            const isInView = useInView(ref, {
+              amount: 0.5,
+              once: false,
+            });
+
+            const controls = useAnimation();
+
+            useEffect(() => {
+              if (isInView) {
+                controls.start("visible");
+              } else {
+                controls.start("hidden");
+              }
+            }, [isInView, controls]);
+
+            return (
+              <motion.div
+                ref={ref}
+                key={index}
+                initial="hidden"
+                animate={controls}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 0.9,
+                      delay: index * 0.2,
+                      ease: "easeOut",
+                    },
+                  },
+                }}
               >
-                <div className="mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-[#03045e] mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </Card>
-            </motion.div>
-          ))}
+                <Card
+                  variant="elevated"
+                  className="p-6 hover:shadow-lg transition-shadow duration-300 bg-[#caf0f8] bg-opacity-30 h-full"
+                >
+                  <div className="mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold text-[#03045e] mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
-  )
+  );
 }
