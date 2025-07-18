@@ -1,8 +1,12 @@
+'use client';
+import Lenis from '@studio-freight/lenis';
+import { useEffect } from "react";
 import React from 'react'
 import { Card } from '../components/UI/Card'
 import { Button } from '../components/UI/Button'
 import Link from 'next/link'
-import { CheckCircle } from 'lucide-react'
+
+// import { CheckCircle } from 'lucide-react'
 const teamMembers = [
   {
     name: 'Dr. Emily ',
@@ -66,6 +70,33 @@ const milestones = [
   },
 ]
 export function About() {
+  // lenis
+  useEffect(() => {
+    // Create a new Lenis instance
+    const lenis = new Lenis({
+      duration: 8,  // Duration of the smooth scroll
+      easing: (t) => t,  // Easing function
+      lerp: 0.1,  // The rate of interpolation
+      wheelEventsTarget: document.documentElement,  // Listen to scroll events on the document element
+      infinite: false,
+      smoothWheel: true,
+    });
+
+    // Function for animation frame
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    // Start the animation frame loop
+    requestAnimationFrame(raf);
+
+    // Cleanup when the component is unmounted
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <div className="bg-[#caf0f8] bg-opacity-30 min-h-screen pt-20">
       {/* Hero Section */}
@@ -89,8 +120,8 @@ export function About() {
 
             <p className="hidden text-gray-700 md:mt-4 md:block">
               At Laziya Online Academy, we envision a future where technology seamlessly
-              supports education, empowering students, teachers, and administrators worldwide. 
-              We believe in creating an accessible, intuitive, and impactful learning environment 
+              supports education, empowering students, teachers, and administrators worldwide.
+              We believe in creating an accessible, intuitive, and impactful learning environment
               that transcends geographical boundaries and adapts to every learner's needs.
             </p>
 

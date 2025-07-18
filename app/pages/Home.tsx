@@ -5,7 +5,8 @@ import { FeatureSection } from '../components/Home/FeatureSection'
 import { VideoTourSection } from '../components/Home/VideoTourSection'
 import { TestimonialSection } from '../components/Home/TestimonialSection'
 import { StatsSection } from '../components/Home/StatsSection'
-import { Button } from '../components/UI/Button'
+// import { Button } from '../components/UI/Button'
+
 export function Home() {
   return (
     <>

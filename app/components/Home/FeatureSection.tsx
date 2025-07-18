@@ -49,6 +49,7 @@ const features = [
     icon: <Shield size={32} className="text-[#00b4d8]" />,
   },
 ]
+
 export function FeatureSection() {
   return (
     <section className="py-16 bg-white">

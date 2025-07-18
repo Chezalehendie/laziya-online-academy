@@ -1,8 +1,38 @@
+'use client';
+import Lenis from '@studio-freight/lenis';
+import { useEffect } from "react";
 import React from 'react'
 import { FaqSection } from '../components/Contact/FaqSection'
 import { Mail, Phone, MapPin } from 'lucide-react'
 
 export function Contact() {
+    // lenis
+    useEffect(() => {
+      // Create a new Lenis instance
+      const lenis = new Lenis({
+        duration: 8,  // Duration of the smooth scroll
+        easing: (t) => t,  // Easing function
+        lerp: 0.1,  // The rate of interpolation
+        wheelEventsTarget: document.documentElement,  // Listen to scroll events on the document element
+        infinite: false,
+        smoothWheel: true,
+      });
+  
+      // Function for animation frame
+      function raf(time: number) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+  
+      // Start the animation frame loop
+      requestAnimationFrame(raf);
+  
+      // Cleanup when the component is unmounted
+      return () => {
+        lenis.destroy();
+      };
+    }, []);
+
   return (
     <div className="bg-[#caf0f8] bg-opacity-30 min-h-screen pt-20">
       {/* Contact Section */}
@@ -104,7 +134,7 @@ export function Contact() {
                         <textarea 
                           placeholder="Type your message here..." 
                           className="block w-full px-4 py-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md resize-y focus:outline-none focus:border-[#00b4d8] caret-[#00b4d8]" 
-                          rows="4"
+                          rows={4}
                         ></textarea>
                       </div>
                     </div>
